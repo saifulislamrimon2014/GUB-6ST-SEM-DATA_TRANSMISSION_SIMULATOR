@@ -1,0 +1,73 @@
+i = 1;
+j = 1;
+d = blanks(100);
+l = 'DLEETX';
+sd = blanks(100);
+ds = blanks(100);
+
+disp('Enter Data in UpperCase: ');
+d = input('','s');
+
+sd(1:6) = 'DLESTX';
+j = 7;
+
+while i <= length(d)
+    if d(i) == 'D' && d(i + 1) == 'L' && d(i + 2) == 'E'
+        sd(j:j+5) = 'DLEDLE';
+        j = j + 6;
+        i = i + 3;
+    else
+        sd(j) = d(i);
+        j = j + 1;
+        i = i + 1;
+    end
+end
+
+sd(j) = char(0);
+ds = sd;
+
+ds = strcat(ds, l);
+
+disp('After Stuffing: ');
+disp(ds);
+
+disp('Do you want to De-Stuff the Stuffed Message?');
+disp('Press ''1'' (YES)');
+disp('Press ''0'' (NO)');
+
+choice = input('');
+
+if choice == 0
+    return;
+end
+
+k = j;
+while j <= length(ds) && ds(j) ~= 0
+    if ds(j) == 'D' && ds(j + 1) == 'L' && ds(j + 2) == 'E'
+        if ds(j + 3) == 'D' && ds(j + 4) == 'L' && ds(j + 5) == 'E'
+            % Remove "DLE DLE" by shifting remaining characters
+            ds(k:j) = ds(j + 6:end);
+            % Update loop condition and string length
+            j = k;
+            ds = ds(1:k);
+        else
+            % Found single "DLE", copy character (check index bounds)
+            if i <= length(d)
+                ds(k) = d(i);
+                i = i + 1;
+                k = k + 1;
+            end
+        end
+    else
+        % Copy character (check index bounds)
+        if i <= length(d)
+            ds(k) = d(i);
+            i = i + 1;
+            k = k + 1;
+        end
+    end
+    j = j + 1;
+end
+
+disp('After De-stuffing: ');
+disp(ds);
